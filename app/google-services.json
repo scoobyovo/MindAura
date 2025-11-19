@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "188594400112",
+    "project_id": "moodaurafb",
+    "storage_bucket": "moodaurafb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:188594400112:android:a9321de792fef349fbfdb5",
+        "android_client_info": {
+          "package_name": "com.example.mindaura"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpZ2XpX-c_EUQorxds-WHMk1MlR_MSoSk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
