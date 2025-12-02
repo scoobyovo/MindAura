@@ -25,6 +25,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.mindaura.AuthState
 import com.example.mindaura.AuthenticationViewModel
+import com.example.mindaura.Destination
+import com.example.mindaura.ui.theme.MindAuraTheme
 
 @Composable
 fun LoginPage(modifier : Modifier = Modifier,
@@ -85,7 +87,7 @@ fun LoginPage(modifier : Modifier = Modifier,
         Spacer(modifier = Modifier.height(8.dp))
 
         TextButton(onClick = {
-            navController.navigate("signup")
+            navController.navigate(Destination.Signup.route)
         }) {
             Text(text = "No account? Sign up here.")
         }

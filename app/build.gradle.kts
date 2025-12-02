@@ -41,6 +41,8 @@ android {
 }
 
 dependencies {
+    implementation("com.kizitonwose.calendar:compose:2.6.2")
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
