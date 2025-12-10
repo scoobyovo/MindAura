@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.mindaura.model.JournalEntry
+import kotlinx.coroutines.flow.Flow
 import java.util.Date
 
 @Dao
@@ -19,6 +20,9 @@ interface JournalDao {
 
     @Update
     fun updateJournalEntry(journalEntry: JournalEntry)
+
+    @Query("SELECT * FROM journalEntry")
+    fun getAllJournalEntries(): Flow<List<JournalEntry>>
 
     // More to add for stats?
 }
