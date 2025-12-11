@@ -1,6 +1,7 @@
-package com.example.coop2_fbauthentication.screens
+package com.example.mindaura.screens
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import com.example.mindaura.AuthState
 import com.example.mindaura.AuthenticationViewModel
 import com.example.mindaura.screens.CalendarView
 import com.example.mindaura.screens.JournalEntryPage
+import com.example.mindaura.vm.JournalViewModel
 import com.google.firebase.auth.FirebaseAuth
 import java.nio.file.WatchEvent
 
@@ -27,12 +29,16 @@ import java.nio.file.WatchEvent
 @Composable
 fun HomePage(modifier : Modifier = Modifier,
     navController: NavController,
-    authViewModel : AuthenticationViewModel
+    authViewModel : AuthenticationViewModel, journalVM : JournalViewModel
 )
 {
     val authState = authViewModel.authState.observeAsState()
     val auth : FirebaseAuth = FirebaseAuth.getInstance()
     val user = auth.currentUser
+
+    val uid = FirebaseAuth.getInstance().currentUser?.uid
+
+    Log.d("TEST_FIREBASE", "Current UID: $uid")
 
     /*
         Launches when authState value has changed
@@ -41,7 +47,6 @@ fun HomePage(modifier : Modifier = Modifier,
     LaunchedEffect(authState.value) {
         when(authState.value){
             is AuthState.Unauthenticated -> navController.navigate("login")
-            // idk what to do
             else -> Unit
         }
     }
@@ -59,7 +64,7 @@ fun HomePage(modifier : Modifier = Modifier,
         }) {
             Text(text = "Sign out")
         }
-        CalendarView(modifier = Modifier, viewMode = "Default")
+        CalendarView(modifier = Modifier, navController, journalVM, user?.uid!!)
         TextButton(
             modifier = Modifier.fillMaxSize()
             .padding(end = 5.dp),

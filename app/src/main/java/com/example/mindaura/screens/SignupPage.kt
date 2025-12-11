@@ -1,4 +1,4 @@
-package com.example.coop2_fbauthentication.screens
+package com.example.mindaura.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement

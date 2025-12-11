@@ -1,6 +1,7 @@
 package com.example.mindaura.model
 
-
 data class Activities(
-    val temp : String
+    val label: String = "",
+    val  iconRes: Int = 0,
+    var isSelected: Boolean = false
 )

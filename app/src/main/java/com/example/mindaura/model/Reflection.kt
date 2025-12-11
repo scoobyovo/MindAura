@@ -1,14 +1,12 @@
 package com.example.mindaura.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import java.util.Date
+import java.time.LocalDate
 
-@Entity
 data class Reflection (
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val date : Date,
-    val quote : Quote,
-    val user_id : String,
-    val text : String,
+    var id: String = "",
+    val date : Long = System.currentTimeMillis(),
+    val quote_text : String? = "",
+    val quote_author : String? = "",
+    val user_id : String? = "",
+    val text : String? = "",
 )

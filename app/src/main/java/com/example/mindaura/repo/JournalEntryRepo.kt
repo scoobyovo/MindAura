@@ -1,37 +1,73 @@
 package com.example.mindaura.repository
 
-import com.example.mindaura.db.JournalDao
 import com.example.mindaura.model.JournalEntry
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
-import java.util.Date
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.tasks.await
+import java.util.Calendar
 
-/**
- * Manages all data operations for Journal Entries.
- * It uses the DAO to interact with the local Room database.
- */
-class JournalEntryRepo(private val journalDao: JournalDao) {
+class JournalRepo(private val db: FirebaseFirestore) {
 
-    /**
-     * Retrieves all journal entries from the database via the DAO.
-     * Returns a Flow, which will automatically update the UI when data changes.
-     */
-    fun getEntries(): Flow<List<JournalEntry>> {
-        return journalDao.getAllJournalEntries() // 3. Use the DAO to get data
+    private val journalEntries = db.collection("journalEntry")
+
+    fun getEntriesFlow(userId: String?): Flow<List<JournalEntry>> = callbackFlow {
+        val listener = journalEntries
+            .whereEqualTo("user_id", userId)
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    close(e)
+                    return@addSnapshotListener
+                }
+                val list = snapshot?.toObjects(JournalEntry::class.java) ?: emptyList()
+                trySend(list).isSuccess
+            }
+        awaitClose { listener.remove() }
     }
 
-    /**
-     * Inserts a new journal entry into the database via the DAO.
-     */
-    suspend fun insert(entry: JournalEntry) {
-        journalDao.insertJournalEntry(entry) // 4. Use the DAO to insert data
+    suspend fun saveEntry(entry: JournalEntry) {
+        val doc = if (entry.id.isEmpty())
+            journalEntries.document()
+        else
+            journalEntries.document(entry.id)
+
+        entry.id = doc.id
+        doc.set(entry).await()
     }
 
-    // You can add other functions here that your ViewModel might need
-    suspend fun update(entry: JournalEntry) {
-        journalDao.updateJournalEntry(entry)
+    suspend fun updateEntry(entry: JournalEntry) {
+        journalEntries.document(entry.id).set(entry).await()
     }
 
-    suspend fun getEntryByDate(date: Date): JournalEntry? {
-        return journalDao.getJournalEntryByDate(date)
+    fun getEntryByDate(userId: String, selectedDate: Long): Flow<JournalEntry?> = callbackFlow {
+        val calendar = Calendar.getInstance().apply {
+            timeInMillis = selectedDate
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+        val startOfDay = calendar.timeInMillis
+        calendar.add(Calendar.DAY_OF_MONTH, 1)
+        val endOfDay = calendar.timeInMillis
+
+        val listener = journalEntries
+            .whereEqualTo("user_id", userId)
+            .whereGreaterThanOrEqualTo("date", startOfDay)
+            .whereLessThan("date", endOfDay)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    close(error)
+                    return@addSnapshotListener
+                }
+
+                val list = snapshot?.toObjects(JournalEntry::class.java) ?: emptyList()
+                trySend(list.firstOrNull())
+            }
+
+        awaitClose { listener.remove() }
     }
+
+
 }
