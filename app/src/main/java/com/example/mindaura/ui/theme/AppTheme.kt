@@ -33,33 +33,38 @@ private val lightColorScheme = AppColorScheme(
 )
 
 private val typography = AppTypography(
+    veryLargeTitle = TextStyle(
+        fontFamily = mainFont,
+        fontWeight = FontWeight.Bold,
+        fontSize = 44.sp,
+    ),
     titleLarge = TextStyle(
         fontFamily = mainFont,
         fontWeight = FontWeight.Bold,
-        fontSize = 24.sp,
+        fontSize = 32.sp,
     ),
     titleNormal = TextStyle(
         fontFamily = mainFont,
         fontWeight = FontWeight.Bold,
-        fontSize = 20.sp
+        fontSize = 26.sp
     ),
     body = TextStyle(
         fontFamily = mainFont,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
+        fontSize = 14.sp
     ),
     labelLarge = TextStyle(
         fontFamily = mainFont,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 16.sp
+        fontSize = 28.sp
     ),
     labelNormal = TextStyle(
         fontFamily = mainFont,
-        fontSize = 14.sp
+        fontSize = 22.sp
     ),
     labelSmall = TextStyle(
         fontFamily = mainFont,
-        fontSize = 12.sp
+        fontSize = 18.sp
     )
 )
 

@@ -1,4 +1,4 @@
-package com.example.mindaura.repo
+package com.example.mindaura.db.repo
 
 import android.os.Build
 import android.util.Log

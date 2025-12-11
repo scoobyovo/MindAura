@@ -9,6 +9,12 @@ import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 
+/**
+ * Converts a timestamp in milliseconds to a date string in the format `yyyy-MM-dd`.
+ *
+ * @receiver Timestamp in milliseconds.
+ * @return Formatted date string.
+ */
 @RequiresApi(Build.VERSION_CODES.O)
 fun Long.toDateString(): String {
     val instant = Instant.ofEpochMilli(this)
@@ -16,6 +22,14 @@ fun Long.toDateString(): String {
     return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 }
 
+/**
+ * Converts a timestamp in milliseconds to a full date string
+ * including day of the week, month, day, and year.
+ * Example: "Wednesday, December 11, 2025".
+ *
+ * @receiver Timestamp in milliseconds.
+ * @return Formatted full date string.
+ */
 @RequiresApi(Build.VERSION_CODES.O)
 fun Long.toFullDateString(): String {
     val instant = Instant.ofEpochMilli(this)
@@ -24,6 +38,14 @@ fun Long.toFullDateString(): String {
     return date.format(formatter)
 }
 
-fun LocalDate.toDayMillis(): Long =
-    this.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+/**
+ * Converts a [LocalDate] to the timestamp in milliseconds representing the start of that day.
+ *
+ * @receiver LocalDate to convert.
+ * @return Milliseconds at the start of the day.
+ */
+fun LocalDate.toDayMillis(): Long {
+    return this.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+}
+
 

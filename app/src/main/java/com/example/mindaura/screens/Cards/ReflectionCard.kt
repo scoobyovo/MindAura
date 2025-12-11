@@ -36,7 +36,7 @@ import androidx.navigation.NavController
 import com.example.mindaura.model.Reflection
 import com.example.mindaura.toDateString
 import com.example.mindaura.ui.theme.MindAuraTheme
-import com.example.mindaura.vm.QuoteViewModel
+import com.example.mindaura.db.vm.QuoteViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable

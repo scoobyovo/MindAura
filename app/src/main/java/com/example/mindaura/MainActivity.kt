@@ -3,7 +3,6 @@ package com.example.mindaura
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -30,11 +28,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.mindaura.api.Api
-import com.example.mindaura.api.QuoteService
 import com.example.mindaura.model.QuoteData
 import com.example.mindaura.model.Reflection
-import com.example.mindaura.repo.QuoteRepo
 import com.example.mindaura.screens.HomePage
 import com.example.mindaura.screens.InspirePage
 import com.example.mindaura.screens.JournalEntryPage
@@ -43,9 +38,8 @@ import com.example.mindaura.screens.ProfilePage
 import com.example.mindaura.screens.ReflectionEntryPage
 import com.example.mindaura.screens.SignupPage
 import com.example.mindaura.ui.theme.MindAuraTheme
-import com.example.mindaura.vm.JournalViewModel
-import com.example.mindaura.vm.QuoteViewModel
-import com.google.firebase.firestore.FirebaseFirestore
+import com.example.mindaura.db.vm.JournalViewModel
+import com.example.mindaura.db.vm.QuoteViewModel
 import java.util.Date
 import kotlin.getValue
 
@@ -69,11 +63,8 @@ class MainActivity : ComponentActivity() {
                         JournalViewModel()
                     }
                 )
-                val quoteService = Api.retrofitService
-                val storage = Storage(this.dataStore)
-                val quoteRepo = QuoteRepo(quoteService, storage)
 
-                val quoteVM: QuoteViewModel = viewModel(
+                val quoteVM: QuoteViewModel = viewModel(s
                     factory = viewModelFactory {
                         QuoteViewModel(context)
                     }

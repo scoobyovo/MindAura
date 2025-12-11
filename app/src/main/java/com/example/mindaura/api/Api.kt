@@ -5,6 +5,13 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
+/**
+ * Singleton object providing the Retrofit service for fetching quotes.
+ *
+ * Uses the ZenQuotes API to fetch random quotes and the daily quote.
+ *
+ * @property retrofitService Lazy-initialized [QuoteService] for making API calls.
+ */
 object Api {
     private val BASE_URL = "https://zenquotes.io/api/"
     // quotes returns random quotes, today returns daily

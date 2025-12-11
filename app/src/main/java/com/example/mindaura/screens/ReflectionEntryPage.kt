@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -21,11 +20,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.SegmentedButtonDefaults.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,8 +37,20 @@ import androidx.navigation.NavController
 import com.example.mindaura.model.QuoteData
 import com.example.mindaura.model.Reflection
 import com.example.mindaura.ui.theme.MindAuraTheme
-import com.example.mindaura.vm.QuoteViewModel
+import com.example.mindaura.db.vm.QuoteViewModel
 
+/**
+ * Page for creating or editing a reflection based on a quote.
+ *
+ * Displays the selected quote, author, a text field for the user's reflection,
+ * and a save button. Handles both creating new reflections and editing existing ones.
+ *
+ * @param quote The quote to reflect on, or null if editing an existing reflection.
+ * @param userId The ID of the current user.
+ * @param navController Navigation controller to handle navigation.
+ * @param quoteVM ViewModel for managing quotes and reflections.
+ * @param existingReflection The reflection being edited, if any.
+ */
 @Composable
 fun ReflectionEntryPage(quote: QuoteData?,
                         userId : String,
@@ -80,7 +88,6 @@ fun ReflectionEntryPage(quote: QuoteData?,
             Text(
                 text = if (editing) "Edit Reflection" else "New Reflection",
                 style = MindAuraTheme.typography.labelNormal,
-                color = Color(0xFF7A5CBD)
             )
         }
 

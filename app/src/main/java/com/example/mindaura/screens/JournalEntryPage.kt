@@ -1,8 +1,6 @@
 package com.example.mindaura.screens
 
 import android.os.Build
-import android.util.Log
-import android.widget.Space
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -19,7 +17,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,12 +29,9 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.SegmentedButtonDefaults.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -47,25 +41,30 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.util.fastForEachIndexed
 import androidx.navigation.NavController
-import com.example.mindaura.AuthenticationViewModel
 import com.example.mindaura.R
 import com.example.mindaura.model.Activities
 import com.example.mindaura.model.Mood
-import com.example.mindaura.toDateString
 import com.example.mindaura.toFullDateString
 import com.example.mindaura.ui.theme.MindAuraTheme
-import com.example.mindaura.vm.JournalViewModel
+import com.example.mindaura.db.vm.JournalViewModel
 import java.util.Date
 
+/**
+ * Page for creating a new journal entry for a specific date.
+ *
+ * Allows the user to select mood, activities, write reflections, gratitude, and personal notes.
+ * Saves the entry via [JournalViewModel] and navigates back to the home page upon completion.
+ *
+ * @param modifier Modifier to customize layout.
+ * @param date The date for the journal entry.
+ * @param navController Navigation controller to navigate between screens.
+ * @param journalVM ViewModel managing journal entries.
+ */
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun JournalEntryPage(
@@ -122,8 +121,8 @@ fun JournalEntryPage(
         }
 
         Text(
-            "Hello user! Today is ${millisDate.toFullDateString()}",
-            style = MindAuraTheme.typography.titleLarge
+            "New entry for ${millisDate.toFullDateString()}",
+            style = MindAuraTheme.typography.titleNormal
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -165,7 +164,7 @@ fun JournalEntryPage(
                         )
                         Text(
                             mood.label,
-                            style = MindAuraTheme.typography.labelNormal,
+                            style = MindAuraTheme.typography.body,
                             textAlign = TextAlign.Center
                         )
                     }
@@ -204,7 +203,7 @@ fun JournalEntryPage(
                         )
                         Text(
                             activity.label,
-                            style = MindAuraTheme.typography.labelNormal,
+                            style = MindAuraTheme.typography.body,
                             textAlign = TextAlign.Center
                         )
                     }
@@ -293,6 +292,13 @@ fun JournalEntryPage(
     }
 }
 
+/**
+ * Section for entering up to 3 gratitude items.
+ *
+ * @param gratitudeList Mutable list of gratitude items.
+ * @param onGratitudeChange Callback invoked when a gratitude item changes.
+ *        Provides the index of the item and the new value.
+ */
 @Composable
 fun GratitudeSection(
     gratitudeList: MutableList<String>,

@@ -12,7 +12,20 @@
           "package_name": "com.example.mindaura"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "188594400112-a3j4fc2kae2uj7l9fj7aomtf9tg0ebqd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mindaura",
+            "certificate_hash": "d32be12dc32d27a0f58f60068c8f66baaa4fdd35"
+          }
+        },
+        {
+          "client_id": "188594400112-3quhqkndlq8rhj0d5dpp3vdffclu3oi4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDpZ2XpX-c_EUQorxds-WHMk1MlR_MSoSk"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "188594400112-3quhqkndlq8rhj0d5dpp3vdffclu3oi4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
